@@ -1,0 +1,29 @@
+name: Verify Human Identity
+
+on:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install ClawHub CLI
+        run: npm install -g clawhub
+
+      - name: Install Verified Agent Identity
+        run: clawhub install verified-agent-identity
+
+      - name: Run Verification
+        run: |
+          clawhub verified-agent-identity \
+          --challenge '{"name":"kytzy12","description":"kytzy12 AI Agent"}'
+          
